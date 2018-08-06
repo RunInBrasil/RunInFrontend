@@ -2,7 +2,10 @@
   <v-container class="text-xs-center">
     <v-layout row wrap>
       <v-flex xs12>
-        <h1>{{ totalTime }}</h1>
+        <v-fab-transition>
+          <h1 v-show="!finished"
+              style="position: absolute; left: 40%">{{ totalTime }}</h1>
+        </v-fab-transition>
         <v-flex xs12>
           <v-progress-circular
             :rotate="360"
@@ -10,39 +13,67 @@
             :width="5"
             :value="value"
             class="mb-3"
+            style="position: relative; top: 50px"
             color="secondary"
           >
-            <h1>
-              {{ timeFilter }}
-            </h1>
+            <v-fab-transition mode="out-in">
+              <h1 v-if="!finished">
+                {{ timeFilter }}
+              </h1>
+              <v-icon v-else
+                      class="primary--text"
+                      style="font-size: 100px">
+                done_outline
+              </v-icon>
+            </v-fab-transition>
           </v-progress-circular>
         </v-flex>
-        <v-flex xs12 class="
+        <v-slide-x-transition>
+          <v-flex xs12 class="
           headline
           font-weight-light
-          font-italic">
-          <span> {{actualStep + 1 }}o Round</span>
-        </v-flex>
+          font-italic"
+                  style="position: relative; top: 50px"
+                  v-if="!finished">
+            <span> {{actualStep + 1 }}o Round</span>
+          </v-flex>
+        </v-slide-x-transition>
         <v-layout row wrap>
-          <v-flex xs2>
+          <v-fade-transition mode="in-out">
+            <v-flex xs12 v-if="!finished">
+              <v-flex xs2>
             <span class="title grey--text"
                   style="position: relative; left: 10px; top: 74px">
               Vel:
             </span>
-          </v-flex>
-          <v-flex xs12>
-            <v-slide-x-transition>
+              </v-flex>
+              <v-flex xs12>
+                <v-slide-x-transition>
           <span class="
           font-weight-light
           font-italic
           primary--text
           pr-4"
                 style="font-size: 150px"
-          v-if="speedVisible">
+                v-if="speedVisible">
             {{ train[actualStep].speed }}
           </span>
-            </v-slide-x-transition>
-          </v-flex>
+                </v-slide-x-transition>
+              </v-flex>
+            </v-flex>
+
+            <v-flex xs12 class="mt-5"
+                    v-else
+                    style="position: absolute; top: 50%">
+            <span class="display-1 primary--text">
+              Parabéns!!
+            </span>
+              <br>
+              <span class="display-1 primary--text">
+              Treino concluido com sucesso!!!
+            </span>
+            </v-flex>
+          </v-fade-transition>
         </v-layout>
 
 
@@ -66,12 +97,13 @@
       </v-flex>
 
       <v-flex xs4 class="mt-5">
-        <v-fade-transition mode="in-out">
+        <v-fab-transition mode="in-out">
           <v-btn
-            v-if="!timerSwitch"
+            v-if="!timerSwitch && !finished"
             color="secondary"
             dark
             large
+            outline
             fab
             class="bt"
             @click="startTimer"
@@ -80,17 +112,31 @@
           </v-btn>
 
           <v-btn
-            v-else
+            v-else-if="!finished"
             color="secondary"
             dark
             class="bt"
             large
+            outline
             fab
             @click="stopTimer"
           >
             <v-icon>pause</v-icon>
           </v-btn>
-        </v-fade-transition>
+          <v-btn
+            v-else
+            color="secondary"
+            dark
+            round
+            outline
+            style="position: absolute;
+            bottom: 40px;
+            left: 30%"
+            large
+            @click="$router.push('/')">
+            Continuar
+          </v-btn>
+        </v-fab-transition>
 
       </v-flex>
     </v-layout>
@@ -157,9 +203,14 @@
     watch: {
       timePassed: function (value) {
         if (value >= this.train[this.actualStep].time) {
-          this.timePassed = 0
-          this.actualStep++
-          this.speedVisible = false
+          if (this.actualStep == this.train.length - 1) {
+            this.timerSwitch = false
+            this.finished = true
+          } else {
+            this.timePassed = 0
+            this.actualStep++
+            this.speedVisible = false
+          }
           window.setTimeout(func => {
             this.speedVisible = true
           }, 500)
@@ -175,7 +226,7 @@
 <style scoped>
   .bt {
     position: absolute;
-    bottom: 20px;
+    bottom: 30px;
     left: 38%;
   }
 </style>
