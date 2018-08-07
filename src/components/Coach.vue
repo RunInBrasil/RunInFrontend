@@ -191,7 +191,11 @@
         return []
       },
       saveTrain() {
-        firebase.database().ref('trains/' + this.selectedUser.id + '/' + this.date + '/treino').push(
+        let index = 0
+        if (this.$store.getters.usersTrains[this.selectedUser.id][this.date] != null) {
+          index = Object.keys(this.$store.getters.usersTrains[this.selectedUser.id][this.date].treino).length
+        }
+        firebase.database().ref('trains/' + this.selectedUser.id + '/' + this.date + '/treino/' + index).set(
           {
             speed: this.speed,
             time: this.time

@@ -35,7 +35,7 @@ export const store = new Vuex.Store({
   actions: {
     getTodayTrain({commit}) {
       return new Promise((resolve) => {
-        firebase.database().ref(firebase.auth().currentUser.uid + '/27-01-2018/' + '/treino/')
+        firebase.database().ref('trains/' + firebase.auth().currentUser.uid + '/' + (new Date()).toISOString().substring(0, 10) + '/treino/')
           .once('value')
           .then(function(snapshot) {
             commit('setTodayTrain', snapshot.val())
@@ -45,7 +45,7 @@ export const store = new Vuex.Store({
     },
     getTrainDays({commit}) {
       return new Promise((resolve) => {
-        firebase.database().ref(firebase.auth().currentUser.uid)
+        firebase.database().ref('trains/' + firebase.auth().currentUser.uid)
           .once('value')
           .then(function(snapshot) {
             commit('setTrainsDays', snapshot.val())

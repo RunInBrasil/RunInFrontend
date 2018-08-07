@@ -5,7 +5,7 @@
         <v-flex xs12>
           <v-layout row wrap>
             <v-flex xs8 style="position: relative; top: 15px">
-              <span>Treino de Hoje: 12/09/2018</span>
+              <span>Treino de Hoje: {{(new Date()).toISOString().substring(0, 10) | dateFilter}}</span>
             </v-flex>
 
             <v-flex xs4 style="position: relative; left: 30px">
@@ -40,7 +40,7 @@
                 :key="day"
                 xs4
                 class="my-card ma-2">
-                {{ day }}
+                {{ day | dateFilter }}
               </v-flex>
             </v-layout>
           </v-container>
@@ -77,8 +77,6 @@
       firebase.auth().onAuthStateChanged((user) => {
         this.$store.dispatch('getTodayTrain')
         this.$store.dispatch('getTrainDays')
-        console.log('mudou')
-        console.log(firebase.auth().currentUser.uid)
         firebase.database().ref('users/' + firebase.auth().currentUser.uid)
           .set({
             name: firebase.auth().currentUser.displayName,
