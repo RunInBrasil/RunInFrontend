@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import TrainingCounter from '@/components/TrainingCounter'
+import Coach from '@/components/Coach'
 
 
 Vue.use(Router)
@@ -19,7 +20,14 @@ export default new Router({
       name: 'TrainingCounter',
       component: TrainingCounter
     },
-    { path: '/login', component: Login },
+    {
+      path: '/login',
+      component: Login
+    },
+    {
+      path: '/coach',
+      component: Coach
+    },
 
   ]
 })

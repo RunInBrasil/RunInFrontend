@@ -8,6 +8,8 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import * as firebase from "firebase"
 import * as firebaseui from 'firebaseui'
+import DateFilter from './filters/date'
+
 
 Vue.use(Vuetify, { theme: {
   primary: '#2196F3',
@@ -32,6 +34,7 @@ var config = {
 
 Vue.config.productionTip = false
 
+Vue.filter('dateFilter', DateFilter)
 
 /* eslint-disable no-new */
 new Vue({
@@ -43,9 +46,7 @@ new Vue({
   created() {
     firebase.initializeApp(config);
     firebase.auth().onAuthStateChanged((user) => {
-      if(user) {
-        this.$router.push('/')
-      } else {
+      if(!user) {
         this.$router.push('/login')
       }
     });
