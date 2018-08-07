@@ -9,7 +9,7 @@
         <v-flex xs12>
           <v-progress-circular
             :rotate="360"
-            :size="300"
+            :size="236"
             :width="5"
             :value="value"
             class="mb-3"
@@ -32,7 +32,8 @@
           <v-flex xs12 class="
           headline
           font-weight-light
-          font-italic"
+          font-italic
+           mb-3"
                   style="position: relative; top: 50px"
                   v-if="!finished">
             <span> {{actualStep + 1 }}o Round</span>
@@ -54,7 +55,7 @@
           font-italic
           primary--text
           pr-4"
-                style="font-size: 150px"
+                style="font-size: 100px"
                 v-if="speedVisible">
             {{ train[actualStep].speed }}
           </span>
@@ -78,10 +79,11 @@
 
 
         <v-slide-x-transition>
-          <v-layout row wrap v-if="train.length > actualStep + 1 && stepTime - timePassed <= 15">
+          <v-layout row wrap v-if="train.length > actualStep + 1 && stepTime - timePassed <= 15"
+          >
             <v-flex xs4>
             <span class="title grey--text"
-                  style="position: relative; left: 10px; top: 0px">
+                  style="position: relative; left: 10px; top: 10px">
               Prox. Vel:
             </span>
             </v-flex>
@@ -96,7 +98,7 @@
         </v-slide-x-transition>
       </v-flex>
 
-      <v-flex xs4 class="mt-5">
+      <v-flex xs12 class="mt-5">
         <v-fab-transition mode="in-out">
           <v-btn
             v-if="!timerSwitch && !finished"

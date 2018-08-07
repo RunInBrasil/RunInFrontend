@@ -10,7 +10,8 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     count: 0,
-    todayTrain: {}
+    todayTrain: {},
+    trainDays: [],
   },
   mutations: {
     increment (state) {
@@ -18,16 +19,28 @@ export const store = new Vuex.Store({
     },
     setTodayTrain(state, payload) {
       state.todayTrain = payload
-      console.log(payload)
+    },
+    setTrainsDays(state, payload) {
+      state.trainDays = Object.keys(payload).splice(1, Object.keys(payload).length)
     }
   },
   actions: {
     getTodayTrain({commit}) {
       return new Promise((resolve) => {
-        firebase.database().ref('/dsadasda/' + '/27-01-2018/' + '/treino/')
+        firebase.database().ref(firebase.auth().currentUser.uid + '/27-01-2018/' + '/treino/')
           .once('value')
           .then(function(snapshot) {
             commit('setTodayTrain', snapshot.val())
+            resolve(snapshot.val())
+          })
+      })
+    },
+    getTrainDays({commit}) {
+      return new Promise((resolve) => {
+        firebase.database().ref(firebase.auth().currentUser.uid)
+          .once('value')
+          .then(function(snapshot) {
+            commit('setTrainsDays', snapshot.val())
             resolve(snapshot.val())
           })
       })
@@ -36,6 +49,9 @@ export const store = new Vuex.Store({
   getters: {
     todayTrain(state) {
       return state.todayTrain
+    },
+    trainDays(state) {
+      return state.trainDays
     }
   }
 })

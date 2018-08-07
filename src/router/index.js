@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
+import Login from '@/components/Login'
 import TrainingCounter from '@/components/TrainingCounter'
 
 
@@ -17,6 +18,8 @@ export default new Router({
       path: '/vamos_nessa',
       name: 'TrainingCounter',
       component: TrainingCounter
-    }
+    },
+    { path: '/login', component: Login },
+
   ]
 })

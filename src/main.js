@@ -7,6 +7,7 @@ import { store } from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import * as firebase from "firebase"
+import * as firebaseui from 'firebaseui'
 
 Vue.use(Vuetify, { theme: {
   primary: '#2196F3',
@@ -27,9 +28,10 @@ var config = {
   messagingSenderId: "808188414561"
 }
 
-firebase.initializeApp(config)
+// firebase.initializeApp(config)
 
 Vue.config.productionTip = false
+
 
 /* eslint-disable no-new */
 new Vue({
@@ -37,5 +39,15 @@ new Vue({
   store,
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  created() {
+    firebase.initializeApp(config);
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user) {
+        this.$router.push('/')
+      } else {
+        this.$router.push('/login')
+      }
+    });
+  }
 })
