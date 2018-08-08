@@ -25,18 +25,18 @@
         </v-list>
       </v-flex>
     </v-layout>
-    <v-fab-transition>
-      <v-btn
-        color="primary"
-        fab
-        dark
-        right
-        style="position: absolute; bottom: 5%"
-        @click="editUser"
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
-    </v-fab-transition>
+    <!--<v-fab-transition>-->
+      <!--<v-btn-->
+        <!--color="primary"-->
+        <!--fab-->
+        <!--dark-->
+        <!--right-->
+        <!--style="position: absolute; bottom: 5%"-->
+        <!--@click="editUser"-->
+      <!--&gt;-->
+        <!--<v-icon>add</v-icon>-->
+      <!--</v-btn>-->
+    <!--</v-fab-transition>-->
 
 
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
