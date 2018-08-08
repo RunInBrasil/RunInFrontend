@@ -46,7 +46,6 @@
           </v-container>
 
           <v-flex xs12>
-            <p>csadas</p>
             <v-btn round class="bt primary" style="position: absolute;" @click="$router.push('vamos_nessa')">
               Iniciar treino
             </v-btn>

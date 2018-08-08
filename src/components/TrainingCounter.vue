@@ -108,6 +108,7 @@
             outline
             fab
             class="bt"
+            style="position: absolute;"
             @click="startTimer"
           >
             <v-icon>play_arrow</v-icon>
@@ -118,6 +119,7 @@
             color="secondary"
             dark
             class="bt"
+            style="position: absolute;"
             large
             outline
             fab
