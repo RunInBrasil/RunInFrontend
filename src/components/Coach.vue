@@ -198,7 +198,7 @@
         firebase.database().ref('trains/' + this.selectedUser.id + '/' + this.date + '/treino/' + index).set(
           {
             speed: this.speed,
-            time: this.time
+            time: this.time * 60
           }
         )
         this.$store.dispatch('getUsersTrains')
