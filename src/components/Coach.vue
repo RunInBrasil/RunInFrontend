@@ -62,11 +62,11 @@
               <v-layout row wrap>
               <v-list-tile-content>
                 <v-list-tile-title>Velocidade {{ treino.speed }}</v-list-tile-title>
-                <v-list-tile-sub-title>Por {{ treino.time }} minutos
+                <v-list-tile-sub-title>Por {{ treino.time / 60 }} minutos
                 </v-list-tile-sub-title>
               </v-list-tile-content>
                 <v-list-tile-action>
-                  <v-btn flat @click="deleteStep(stepIndex, index)">
+                  <v-btn flat @click="deleteStep(treino.id, index)">
                     <v-icon class="primary--text">
                       close
                     </v-icon>
@@ -193,7 +193,10 @@
       saveTrain() {
         let index = 0
         if (this.$store.getters.usersTrains[this.selectedUser.id][this.date] != null) {
-          index = Object.keys(this.$store.getters.usersTrains[this.selectedUser.id][this.date].treino).length
+          index = this.$store.getters.usersTrains[this.selectedUser.id][this.date].treino[
+            Object.keys(this.$store.getters.usersTrains[this.selectedUser.id][this.date].treino).length
+            - 1
+            ].id + 1
         }
         firebase.database().ref('trains/' + this.selectedUser.id + '/' + this.date + '/treino/' + index).set(
           {

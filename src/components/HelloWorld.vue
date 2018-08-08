@@ -25,7 +25,7 @@
             <v-flex xs12>
               <v-card-text v-for="(step, index) in todayTrain">
                 <span>
-                {{ step.time }} minutos na velocidade {{ step.speed }}
+                {{ step.time / 60 }} minutos na velocidade {{ step.speed }}
                 </span>
                 <br>
               </v-card-text>
@@ -83,6 +83,15 @@
             email: firebase.auth().currentUser.email
           })
       })
+    },
+    mounted() {
+      this.$store.dispatch('getTodayTrain')
+      this.$store.dispatch('getTrainDays')
+      firebase.database().ref('users/' + firebase.auth().currentUser.uid)
+        .set({
+          name: firebase.auth().currentUser.displayName,
+          email: firebase.auth().currentUser.email
+        })
     }
   }
 </script>

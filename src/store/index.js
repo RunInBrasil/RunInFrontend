@@ -10,7 +10,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     count: 0,
-    todayTrain: {},
+    todayTrain: [],
     trainDays: [],
     users: {},
     usersTrains: {}
@@ -20,15 +20,38 @@ export const store = new Vuex.Store({
       state.count++
     },
     setTodayTrain(state, payload) {
-      state.todayTrain = payload
+      state.todayTrain = []
+      for (let data in payload) {
+        if (payload[data] != null) {
+          state.todayTrain.push(payload[data])
+        }
+      }
     },
     setTrainsDays(state, payload) {
-      state.trainDays = Object.keys(payload).splice(1, Object.keys(payload).length)
+      state.trainDays = Object.keys(payload)
     },
     setUsers(state, payload) {
       state.users = payload
     },
     setUsersTrains(state, payload) {
+      state.usersTrains = []
+      for (let user in payload) {
+        for (let trainDay in payload[user])  {
+          for (var i = 0; i < payload[user][trainDay].treino.length; i++) {
+            if (payload[user][trainDay].treino[i] != null) {
+              payload[user][trainDay].treino[i].id = i
+            }
+          }
+          for (var i = 0; i < payload[user][trainDay].treino.length; i++) {
+            if (payload[user][trainDay].treino[i] == null) {
+              payload[user][trainDay].treino.splice(i, 1)
+              i--
+            }
+          }
+        }
+
+
+      }
       state.usersTrains = payload
     }
   },
@@ -49,6 +72,7 @@ export const store = new Vuex.Store({
           .once('value')
           .then(function(snapshot) {
             commit('setTrainsDays', snapshot.val())
+            console.log(snapshot.val())
             resolve(snapshot.val())
           })
       })
