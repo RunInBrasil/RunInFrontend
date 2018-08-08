@@ -69,6 +69,8 @@ export const store = new Vuex.Store({
     getTrainDays({commit}) {
       return new Promise((resolve) => {
         firebase.database().ref('trains/' + firebase.auth().currentUser.uid)
+          .orderByKey()
+          .startAt((new Date()).toISOString().substring(0, 10))
           .once('value')
           .then(function(snapshot) {
             commit('setTrainsDays', snapshot.val())
