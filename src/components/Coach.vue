@@ -106,9 +106,12 @@
             </v-menu>
 
             <v-layout row wrap class="mt-5 mb-5">
-                  <span>
+              <v-flex xs1>
+              <span>
                   Velocidade:
                     </span>
+              </v-flex>
+              <v-flex xs11>
               <v-slider
                 v-model="speed"
                 thumb-label="always"
@@ -119,6 +122,12 @@
                 class="ml-3"
                 hint="speed"
               ></v-slider>
+              </v-flex>
+              <v-flex xs12>
+                <span>
+                {{ speed === 0 ? 'Descanço' : ''}}
+              </span>
+              </v-flex>
             </v-layout>
             <v-layout row wrap>
                   <span>
@@ -196,7 +205,6 @@
       formattedTime() {
         let stringTime = this.time + ''
         if (stringTime.indexOf('.') > -1) {
-          console.log(stringTime.split('.'))
           stringTime = stringTime.split('.')[0] + '\'30\"'
         } else {
           stringTime = stringTime + '\''
