@@ -9,6 +9,7 @@ import 'vuetify/dist/vuetify.min.css'
 import * as firebase from "firebase"
 import * as firebaseui from 'firebaseui'
 import DateFilter from './filters/date'
+import TimeFilter from './filters/time'
 
 
 Vue.use(Vuetify, { theme: {
@@ -35,6 +36,7 @@ var config = {
 Vue.config.productionTip = false
 
 Vue.filter('dateFilter', DateFilter)
+Vue.filter('timeFilter', TimeFilter)
 
 /* eslint-disable no-new */
 new Vue({

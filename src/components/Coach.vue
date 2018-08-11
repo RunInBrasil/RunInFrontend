@@ -231,7 +231,8 @@
       },
       saveTrain() {
         let index = 0
-        if (this.$store.getters.usersTrains[this.selectedUser.id][this.date] != null) {
+        if (this.$store.getters.usersTrains[this.selectedUser.id] !== undefined &&
+          this.date in this.$store.getters.usersTrains[this.selectedUser.id]) {
           index = this.$store.getters.usersTrains[this.selectedUser.id][this.date].treino[
           Object.keys(this.$store.getters.usersTrains[this.selectedUser.id][this.date].treino).length
           - 1
