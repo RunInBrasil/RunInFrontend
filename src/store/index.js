@@ -6,7 +6,6 @@ import router from '../router'
 Vue.use(Vuex)
 
 
-
 export const store = new Vuex.Store({
   state: {
     count: 0,
@@ -16,7 +15,7 @@ export const store = new Vuex.Store({
     usersTrains: {}
   },
   mutations: {
-    increment (state) {
+    increment(state) {
       state.count++
     },
     setTodayTrain(state, payload) {
@@ -36,16 +35,18 @@ export const store = new Vuex.Store({
     setUsersTrains(state, payload) {
       state.usersTrains = []
       for (let user in payload) {
-        for (let trainDay in payload[user])  {
-          for (var i = 0; i < payload[user][trainDay].treino.length; i++) {
-            if (payload[user][trainDay].treino[i] != null) {
-              payload[user][trainDay].treino[i].id = i
+        for (let trainDay in payload[user]) {
+          if (payload[user][trainDay].treino != undefined) {
+            for (var i = 0; i < payload[user][trainDay].treino.length; i++) {
+              if (payload[user][trainDay].treino[i] != null) {
+                payload[user][trainDay].treino[i].id = i
+              }
             }
-          }
-          for (var i = 0; i < payload[user][trainDay].treino.length; i++) {
-            if (payload[user][trainDay].treino[i] == null) {
-              payload[user][trainDay].treino.splice(i, 1)
-              i--
+            for (var i = 0; i < payload[user][trainDay].treino.length; i++) {
+              if (payload[user][trainDay].treino[i] == null) {
+                payload[user][trainDay].treino.splice(i, 1)
+                i--
+              }
             }
           }
         }
@@ -60,7 +61,7 @@ export const store = new Vuex.Store({
       return new Promise((resolve) => {
         firebase.database().ref('trains/' + firebase.auth().currentUser.uid + '/' + (new Date()).toISOString().substring(0, 10) + '/treino/')
           .once('value')
-          .then(function(snapshot) {
+          .then(function (snapshot) {
             commit('setTodayTrain', snapshot.val())
             resolve(snapshot.val())
           })
@@ -72,7 +73,7 @@ export const store = new Vuex.Store({
           .orderByKey()
           .startAt((new Date()).toISOString().substring(0, 10))
           .once('value')
-          .then(function(snapshot) {
+          .then(function (snapshot) {
             commit('setTrainsDays', snapshot.val())
             console.log(snapshot.val())
             resolve(snapshot.val())
